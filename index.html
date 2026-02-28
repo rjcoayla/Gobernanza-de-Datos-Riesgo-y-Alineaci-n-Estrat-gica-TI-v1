@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-focus="gobierno">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GRC Mining — Gobernanza de Datos, Riesgo y Alineación TI</title>
-  <meta name="description" content="Dashboard de Gobernanza TI, Riesgo y Alineación Estratégica para operaciones mineras.">
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -27,9 +20,9 @@
 
 <div id="app">
 
-  <!-- ════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════
        HEADER
-  ════════════════════════════════════════════════════ -->
+  ══════════════════════════════════════ -->
   <header class="header fade-in">
     <div class="header-left">
       <div class="header-badge">
@@ -37,20 +30,24 @@
         SISTEMA GRC — OPERACIÓN MINERA
       </div>
       <h1>Modelo de <em>Gobernanza</em> de Datos,<br>Riesgo y Alineación Estratégica <em>TI–Negocio</em></h1>
-      <p class="header-sub">COBIT 2019 · ISO/IEC 38500 · DAMA-DMBOK · KPI/KRI Framework — Datos simulados para demostración</p>
+      <p class="header-sub">COBIT 2019 · ISO/IEC 38500 · DAMA-DMBOK · GRC Framework · Minería</p>
     </div>
     <div class="header-right">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">
+        <span class="theme-icon" id="theme-icon">☀</span>
+        <span id="theme-text">Claro</span>
+      </button>
       <span class="header-time" id="header-time">—</span>
       <span class="header-sys">SISTEMA OPERATIVO</span>
     </div>
   </header>
 
-  <!-- ════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════
        TOOLBAR
-  ════════════════════════════════════════════════════ -->
+  ══════════════════════════════════════ -->
   <nav class="toolbar fade-in stagger-1">
     <div class="toolbar-nav">
-      <!-- Vista principal -->
       <button id="btn-dashboard" class="toolbar-btn active">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -58,12 +55,11 @@
         </svg>
         Dashboard
       </button>
-
-      <!-- Explorador de BD -->
       <button id="btn-explorer" class="toolbar-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v5c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-          <path d="M3 10v5c0 1.66 4.03 3 9 3s9-1.34 9-3v-5"/><path d="M3 15v4c0 1.66 4.03 3 9 3s9-1.34 9-3v-4"/>
+          <path d="M3 10v5c0 1.66 4.03 3 9 3s9-1.34 9-3v-5"/>
+          <path d="M3 15v4c0 1.66 4.03 3 9 3s9-1.34 9-3v-4"/>
         </svg>
         Explorador de BD
       </button>
@@ -71,7 +67,6 @@
 
     <div class="toolbar-sep"></div>
 
-    <!-- Focus chips (solo en dashboard) -->
     <div class="toolbar-actions">
       <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-right:4px">Foco:</span>
       <button class="chip chip-gobierno active" data-focus="gobierno">Gobierno TI</button>
@@ -81,22 +76,24 @@
     </div>
   </nav>
 
-  <!-- ════════════════════════════════════════════════════
-       FILTERS (solo en vista dashboard)
-  ════════════════════════════════════════════════════ -->
-  <section class="filters fade-in stagger-2" id="filters-bar">
+  <!-- Focus mode label -->
+  <div class="focus-label-bar fade-in stagger-2">
+    <span class="spin-icon">◈</span>
+    <span id="focus-label">MODO: Gobierno TI — Madurez COBIT y Políticas</span>
+  </div>
 
-    <!-- Rango de fechas -->
+  <!-- ══════════════════════════════════════
+       FILTERS
+  ══════════════════════════════════════ -->
+  <section class="filters fade-in stagger-2" id="filters-bar">
     <div class="filter-group">
       <label class="filter-label">Período</label>
       <div class="date-range">
-        <input type="date" class="filter-date" id="f-desde" value="2024-01-01" title="Fecha desde">
+        <input type="date" class="filter-date" id="f-desde" value="2024-01-01">
         <span>→</span>
-        <input type="date" class="filter-date" id="f-hasta" value="2024-12-31" title="Fecha hasta">
+        <input type="date" class="filter-date" id="f-hasta" value="2024-12-31">
       </div>
     </div>
-
-    <!-- Área TI -->
     <div class="filter-group">
       <label class="filter-label" for="f-area">Área TI</label>
       <select class="filter-control" id="f-area">
@@ -107,8 +104,6 @@
         <option value="Infraestructura">Infraestructura</option>
       </select>
     </div>
-
-    <!-- Nivel de riesgo -->
     <div class="filter-group">
       <label class="filter-label" for="f-riesgo">Nivel Riesgo</label>
       <select class="filter-control" id="f-riesgo">
@@ -118,8 +113,6 @@
         <option value="bajo">Bajo</option>
       </select>
     </div>
-
-    <!-- Prioridad -->
     <div class="filter-group">
       <label class="filter-label" for="f-prioridad">Prioridad</label>
       <select class="filter-control" id="f-prioridad">
@@ -129,217 +122,158 @@
         <option value="baja">Baja</option>
       </select>
     </div>
-
     <button class="btn-reset" id="btn-reset">↺ Restablecer</button>
-
-    <div class="filter-count">
-      Registros: <strong id="filter-count-val">—</strong>
-    </div>
+    <div class="filter-count">Registros: <strong id="filter-count-val">—</strong></div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════
        VISTA DASHBOARD
-  ════════════════════════════════════════════════════ -->
+  ══════════════════════════════════════ -->
   <div id="dashboard-view">
     <div class="main-content">
 
-      <!-- KPI ROW -->
+      <!-- KPI ROW — IDs para highlight -->
       <section class="kpi-row fade-in stagger-3">
-
-        <div class="kpi-card kpi-cyan">
+        <div class="kpi-card kpi-cyan"   id="kpi-0">
           <div class="kpi-label">Madurez COBIT<br>Promedio (1–5)</div>
           <div class="kpi-value" id="kpi-maturity">—</div>
-          <div class="kpi-sub" id="sub-maturity">— registros</div>
+          <div class="kpi-sub"   id="sub-maturity">— registros</div>
           <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-maturity" style="width:0%"></div></div>
           <div class="kpi-icon">◈</div>
         </div>
-
-        <div class="kpi-card kpi-green">
+        <div class="kpi-card kpi-green"  id="kpi-1">
           <div class="kpi-label">Políticas<br>Institucionalizadas</div>
           <div class="kpi-value" id="kpi-politicas">—</div>
           <div class="kpi-sub">promedio del período</div>
           <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-politicas" style="width:0%"></div></div>
           <div class="kpi-icon">⚙</div>
         </div>
-
-        <div class="kpi-card kpi-blue">
-          <div class="kpi-label">Iniciativas TI<br>Alineadas Estrategia</div>
+        <div class="kpi-card kpi-blue"   id="kpi-2">
+          <div class="kpi-label">Iniciativas TI<br>Alineadas / Impacto</div>
           <div class="kpi-value" id="kpi-alineadas">—</div>
-          <div class="kpi-sub">alineación promedio</div>
+          <div class="kpi-sub">varía por modo de foco</div>
           <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-alineadas" style="width:0%"></div></div>
           <div class="kpi-icon">⬡</div>
         </div>
-
-        <div class="kpi-card kpi-purple">
+        <div class="kpi-card kpi-purple" id="kpi-3">
           <div class="kpi-label">Calidad de Datos<br>Promedio</div>
           <div class="kpi-value" id="kpi-calidad">—</div>
           <div class="kpi-sub">todos los dominios</div>
           <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-calidad" style="width:0%"></div></div>
           <div class="kpi-icon">✦</div>
         </div>
-
-        <div class="kpi-card kpi-red">
+        <div class="kpi-card kpi-red"    id="kpi-4">
           <div class="kpi-label">Riesgos Altos<br>Activos</div>
           <div class="kpi-value" id="kpi-riesgos">—</div>
-          <div class="kpi-sub" id="sub-riesgos">de — evaluados</div>
+          <div class="kpi-sub"   id="sub-riesgos">de — evaluados</div>
           <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-riesgos" style="width:0%"></div></div>
           <div class="kpi-icon">⚠</div>
         </div>
-
       </section>
 
       <!-- CHARTS MAIN -->
       <section class="charts-main fade-in stagger-4">
-
-        <!-- Madurez COBIT Radar -->
-        <div class="chart-panel">
+        <div class="chart-panel" id="panel-maturity">
           <div class="chart-panel-header">
             <div class="chart-panel-title">
               <span class="chart-dot dot-cyan"></span>
-              Madurez COBIT por Dominio
+              Madurez COBIT — Radar / Score por Dominio
             </div>
             <span class="chart-badge">COBIT 2019</span>
           </div>
-          <div class="chart-wrap">
-            <canvas id="chart-maturity"></canvas>
-          </div>
+          <div class="chart-wrap"><canvas id="chart-maturity"></canvas></div>
         </div>
-
-        <!-- Controles efectivos vs planeados -->
-        <div class="chart-panel">
+        <div class="chart-panel" id="panel-controls">
           <div class="chart-panel-header">
             <div class="chart-panel-title">
               <span class="chart-dot dot-green"></span>
-              Controles Efectivos vs Planeados
+              Controles / Riesgo / Alineación por Área
             </div>
-            <span class="chart-badge">Por Área TI</span>
+            <span class="chart-badge" id="badge-controls">Controles</span>
           </div>
-          <div class="chart-wrap">
-            <canvas id="chart-controls"></canvas>
-          </div>
+          <div class="chart-wrap"><canvas id="chart-controls"></canvas></div>
         </div>
-
       </section>
 
       <!-- CHARTS SECONDARY -->
       <section class="charts-secondary fade-in stagger-5">
-
-        <!-- Calidad de datos por dominio -->
-        <div class="chart-panel">
+        <div class="chart-panel" id="panel-quality">
           <div class="chart-panel-header">
             <div class="chart-panel-title">
               <span class="chart-dot dot-amber"></span>
-              Calidad de Datos por Dominio
+              Calidad de Datos — DQ Index
             </div>
-            <span class="chart-badge">DQ Index</span>
+            <span class="chart-badge">DAMA-DMBOK</span>
           </div>
-          <div class="chart-wrap" style="height:260px">
-            <canvas id="chart-quality"></canvas>
-          </div>
+          <div class="chart-wrap" style="height:260px"><canvas id="chart-quality"></canvas></div>
         </div>
-
-        <!-- Proyectos TI vs objetivos estratégicos -->
-        <div class="chart-panel">
+        <div class="chart-panel" id="panel-projects">
           <div class="chart-panel-header">
             <div class="chart-panel-title">
               <span class="chart-dot dot-purple"></span>
-              Proyectos TI — Impacto vs Alineación
+              Proyectos TI — Impacto / Scatter Riesgo
             </div>
             <span class="chart-badge">PMO</span>
           </div>
-          <div class="chart-wrap" style="height:260px">
-            <canvas id="chart-projects"></canvas>
-          </div>
+          <div class="chart-wrap" style="height:260px"><canvas id="chart-projects"></canvas></div>
         </div>
-
       </section>
 
       <!-- RISK PANEL -->
       <section class="risk-panel fade-in">
-
-        <!-- Heatmap de riesgo -->
-        <div class="heatmap-container">
+        <div class="heatmap-container" id="heatmap-wrap">
           <div class="heatmap-title">
             <span class="chart-dot dot-red"></span>
             Heatmap de Riesgo — Score Actual vs Nivel Aceptado
           </div>
-
           <div class="heatmap-grid-wrap">
             <div>
-              <div id="heatmap-y" style="display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:3px">
-                <!-- Y labels renderizados por JS -->
-              </div>
+              <div id="heatmap-y" style="display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:3px"></div>
             </div>
             <div style="flex:1">
-              <div id="heatmap-grid"><!-- JS renders rows here --></div>
+              <div id="heatmap-grid"></div>
               <div class="hm-axis-labels">
                 <span>Score Riesgo: Bajo (0)</span>
-                <span>Score Riesgo: Alto (100)</span>
+                <span>Alto (100)</span>
               </div>
             </div>
           </div>
-
           <div class="hm-legend">
-            <div class="hm-legend-item">
-              <div class="hm-legend-dot" style="background:rgba(0,225,122,0.3);border:1px solid rgba(0,225,122,0.4)"></div> Bajo
-            </div>
-            <div class="hm-legend-item">
-              <div class="hm-legend-dot" style="background:rgba(255,183,0,0.3);border:1px solid rgba(255,183,0,0.4)"></div> Medio
-            </div>
-            <div class="hm-legend-item">
-              <div class="hm-legend-dot" style="background:rgba(255,61,90,0.3);border:1px solid rgba(255,61,90,0.4)"></div> Alto
-            </div>
-            <div class="hm-legend-item">
-              <div class="hm-legend-dot" style="background:rgba(255,61,90,0.5);border:1px solid var(--red);box-shadow:0 0 4px rgba(255,61,90,0.4)"></div> Crítico
-            </div>
+            <div class="hm-legend-item"><div class="hm-legend-dot" style="background:rgba(0,225,122,0.3);border:1px solid rgba(0,225,122,0.4)"></div> Bajo</div>
+            <div class="hm-legend-item"><div class="hm-legend-dot" style="background:rgba(255,183,0,0.3);border:1px solid rgba(255,183,0,0.4)"></div> Medio</div>
+            <div class="hm-legend-item"><div class="hm-legend-dot" style="background:rgba(255,61,90,0.3);border:1px solid rgba(255,61,90,0.4)"></div> Alto</div>
+            <div class="hm-legend-item"><div class="hm-legend-dot" style="background:rgba(255,61,90,0.5);border:1px solid var(--red)"></div> Crítico</div>
           </div>
         </div>
 
-        <!-- Panel lateral: resumen riesgos -->
-        <div class="chart-panel" style="display:flex;flex-direction:column;gap:0">
+        <div class="chart-panel" id="risk-right" style="display:flex;flex-direction:column;gap:0">
           <div class="chart-panel-header">
             <div class="chart-panel-title">
               <span class="chart-dot dot-amber"></span>
               Distribución de Riesgos por Área
             </div>
           </div>
-
-          <div id="risk-summary" style="flex:1;overflow:auto">
-            <!-- JS renderiza esto -->
-          </div>
+          <div id="risk-summary" style="flex:1;overflow:auto"></div>
         </div>
-
       </section>
 
-      <!-- BOTTOM TABLE — Trazabilidad de decisiones -->
+      <!-- BOTTOM TABLE -->
       <section class="bottom-table fade-in">
         <div class="section-title">
-          Registro de Gobierno TI — Decisiones, Controles y Trazabilidad
+          <span id="table-section-title">Registro de Gobierno TI — Decisiones y Controles</span>
           <span style="margin-left:auto;font-family:var(--font-mono);font-size:9px;color:var(--text-muted)" id="table-count">—</span>
         </div>
-
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Área TI</th>
-                <th>Dominio COBIT</th>
-                <th>Madurez</th>
-                <th>Riesgo</th>
-                <th>Score Riesgo</th>
-                <th>Controles Ef./Plan.</th>
-                <th>Política</th>
-                <th>Prioridad</th>
+                <th>ID</th><th>Fecha</th><th>Área TI</th><th>Dominio COBIT</th>
+                <th>Madurez</th><th>Riesgo</th><th>Score Riesgo</th>
+                <th>Controles Ef./Plan.</th><th>Política</th><th>Prioridad</th>
               </tr>
             </thead>
             <tbody id="table-body">
-              <tr>
-                <td colspan="10" style="text-align:center;padding:24px;color:var(--text-muted);font-family:var(--font-mono);font-size:11px">
-                  Cargando datos…
-                </td>
-              </tr>
+              <tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text-muted);font-family:var(--font-mono);font-size:11px">Cargando…</td></tr>
             </tbody>
           </table>
         </div>
@@ -349,47 +283,40 @@
   </div><!-- /dashboard-view -->
 
 
-  <!-- ════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════
        VISTA EXPLORADOR DE BD
-  ════════════════════════════════════════════════════ -->
+  ══════════════════════════════════════ -->
   <div id="explorer-view" style="display:none;flex-direction:column">
 
-    <!-- Pestañas del explorador -->
     <div class="db-toolbar">
-
       <button class="db-tab active" data-tab="governance">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px">
           <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
         </svg>
         Riesgo TI y Controles
       </button>
-
       <button class="db-tab" data-tab="quality">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px">
           <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
         </svg>
         Calidad de Datos
       </button>
-
       <button class="db-tab" data-tab="projects">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px">
           <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
         </svg>
         Proyectos TI y Estrategia
       </button>
-
       <button class="db-tab" data-tab="policies">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/>
-          <line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
         </svg>
         Catálogo de Políticas
       </button>
-
     </div>
 
-    <!-- Header del explorador -->
     <div class="db-header">
       <div class="db-header-info">
         <div class="db-table-name" id="db-table-name">Riesgo TI y Controles</div>
@@ -400,42 +327,44 @@
         </div>
       </div>
       <div class="db-actions">
-        <input
-          type="text"
-          class="db-search"
-          id="db-search"
-          placeholder="Buscar en tabla…"
-          autocomplete="off"
-        >
-        <div class="db-count">
-          Mostrando <span id="db-showing-count">—</span>
-        </div>
+        <input type="text" class="db-search" id="db-search" placeholder="Buscar en tabla…" autocomplete="off">
+        <div class="db-count">Filas: <span id="db-showing-count">—</span></div>
       </div>
     </div>
 
-    <!-- Tabla -->
     <div class="db-table-wrap">
       <table>
         <thead id="db-thead"><tr><th>Cargando…</th></tr></thead>
         <tbody id="db-tbody">
-          <tr><td style="padding:24px;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">
-            Cargando datos…
-          </td></tr>
+          <tr><td style="padding:24px;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)">Cargando datos…</td></tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Paginación -->
-    <div class="db-pagination" id="db-pagination">
-      <!-- JS renders -->
-    </div>
+    <div class="db-pagination" id="db-pagination"></div>
 
   </div><!-- /explorer-view -->
 
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-title">
+      Modelo de <em>Gobernanza</em> de Datos, Riesgo y Alineación Estratégica <em>TI–Negocio</em> — <em>Minería</em>
+    </div>
+    <div class="footer-meta">
+      <span class="accent">·</span>
+      Datos Simulados
+      <span class="accent">·</span>
+      Febrero 2026
+      <span class="accent">·</span>
+      Creado por <strong style="color:var(--text-secondary)">René Jacinto Coayla Causillas</strong>
+      <span class="accent">·</span>
+    </div>
+  </footer>
+
 </div><!-- /app -->
 
-<!-- App JS -->
 <script src="js/app.js"></script>
-
 </body>
 </html>
